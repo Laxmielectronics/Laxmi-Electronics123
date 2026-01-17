@@ -17,11 +17,17 @@ function send() {
   if (msg.includes("hi") || msg.includes("hello")) reply = "Hello! How can I help you?";
   if (msg.includes("price")) reply = "Please tell product name.";
   if (msg.includes("location")) reply = "We are in Burhanpur.";
+  if (msg == "/tv") reply = "TV starting from ₹12,999";
+  if (msg == "/ac") reply = "AC starting from ₹22,999";
+  if (msg == "/emi") reply = "EMI available from ₹999/month";
+
 
   document.getElementById("chat").innerHTML += 
     `<p><b>You:</b> ${msg}</p><p><b>Bot:</b> ${reply}</p>`;
 }
 </script>
+
+  
 </body>
 </html>
 
