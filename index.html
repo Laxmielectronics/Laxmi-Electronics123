@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Bot</title>
+</head>
+<body>
+  <h2>Chat Bot</h2>
+  <input id="userInput" placeholder="Type message..." />
+  <button onclick="send()">Send</button>
+  <div id="chat"></div>
+
+<script>
+function send() {
+  let msg = document.getElementById("userInput").value;
+  let reply = "I don't understand";
+
+  if (msg.includes("hi")) reply = "Hello!";
+  if (msg.includes("price")) reply = "Please tell product name";
+  if (msg.includes("location")) reply = "We are in Burhanpur";
+
+  document.getElementById("chat").innerHTML += 
+    `<p>You: ${msg}</p><p>Bot: ${reply}</p>`;
+}
+</script>
+</body>
+</html>
