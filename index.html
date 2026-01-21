@@ -1,16 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>AI Image Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+      background: #f4f4f4;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+    }
+    img {
+      margin-top: 20px;
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+  </style>
 </head>
 <body>
-  <h2>Text to Image Generator</h2>
 
-  <input type="text" id="prompt" placeholder="Enter your prompt" style="width:300px;">
-  <button onclick="generateImage()">Generate</button>
+  <h1>Text to Image Generator</h1>
+  <p>Enter your prompt below</p>
+
+  <input type="text" id="prompt" placeholder="Astronaut riding a horse" size="40">
+  <br>
+  <button onclick="generateImage()">Generate Image</button>
 
   <p id="status"></p>
-  <img id="result" style="max-width:500px;margin-top:20px;">
+  <img id="result">
 
   <script>
     async function generateImage() {
@@ -18,33 +41,40 @@
       const status = document.getElementById("status");
       const img = document.getElementById("result");
 
-      status.innerText = "Generating image...";
-      img.src = "";
-
-      const response = await fetch(
-        "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
-        {
-          method: "POST",
-          headers: {
-            "Authorization": "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",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            inputs: prompt
-          })
-        }
-      );
-
-      if (!response.ok) {
-        status.innerText = "Error generating image";
+      if (!prompt) {
+        status.innerText = "Please enter a prompt!";
         return;
       }
 
-      const blob = await response.blob();
-      const imageUrl = URL.createObjectURL(blob);
-      img.src = imageUrl;
-      status.innerText = "Done!";
+      status.innerText = "Generating image... Please wait.";
+      img.src = "";
+
+      try {
+        const response = await fetch(
+          "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
+          {
+            method: "POST",
+            headers: {
+              "Authorization": "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",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ inputs: prompt })
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("API Error");
+        }
+
+        const blob = await response.blob();
+        const imageUrl = URL.createObjectURL(blob);
+        img.src = imageUrl;
+        status.innerText = "Image generated successfully!";
+      } catch (error) {
+        status.innerText = "Failed to generate image. Check your token or model.";
+      }
     }
   </script>
+
 </body>
 </html>
