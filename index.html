@@ -79,7 +79,7 @@
         <p>Enter a text prompt to generate an image using Stable Diffusion XL.</p>
         <form id="image-form">
             <label for="api-key">Hugging Face API Key:</label>
-            <input type="password" id="api-key" placeholder="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" required>
+            <input type="password" id="api-key" placeholder="Enter your Hugging Face API key" required>
             
             <label for="prompt">Prompt:</label>
             <input type="text" id="prompt" placeholder="e.g., Astronaut riding a horse" required>
@@ -97,7 +97,7 @@
         document.getElementById('image-form').addEventListener('submit', async function(event) {
             event.preventDefault();
             
-            const apiKey = document.getElementById('api-key').value;
+            const apiKey = document.getElementById('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').value;
             const prompt = document.getElementById('prompt').value;
             
             if (!apiKey || !prompt) {
